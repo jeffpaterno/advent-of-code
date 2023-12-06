@@ -1,8 +1,9 @@
+from typing import List
+
 import pytest
 
 from almanac import CategoryMap
 from almanac.interpret import find
-from typing import List
 
 
 @pytest.mark.parametrize('category_map, num, expected', [

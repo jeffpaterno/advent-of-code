@@ -1,6 +1,7 @@
 from sys import argv
 
-from almanac import Seed, CategoryMap
+from almanac import CategoryMap
+from almanac.interpret import find
 from core import load, is_seeds, extract_seeds, is_category_map, extract_category_map
 
 if __name__ == '__main__':
@@ -26,4 +27,5 @@ if __name__ == '__main__':
     if _category_map:
         category_maps.append(CategoryMap(src=_category_map[0], dst=_category_map[1], maps=_maps))
 
+    print(min(find('seed', 'location', s, category_maps) for s in seeds))
     print('done')
