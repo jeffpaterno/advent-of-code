@@ -1,7 +1,3 @@
-from typing import Tuple
-from itertools import zip_longest
-
-
 class Seed:
     def __init__(self, *args, **kwargs) -> None:
         self._id = kwargs.get('id', 0)
