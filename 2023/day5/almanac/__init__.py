@@ -1,3 +1,6 @@
+from functools import cache
+
+
 class Seed:
     def __init__(self, *args, **kwargs) -> None:
         self._id = kwargs.get('id', 0)
@@ -22,6 +25,7 @@ class CategoryMap:
     def destination(self) -> str:
         return self._dst
 
+    @cache
     def translate(self, num: int) -> int:
         for m in self._maps:
             dst_start, src_start, delta, *x = m

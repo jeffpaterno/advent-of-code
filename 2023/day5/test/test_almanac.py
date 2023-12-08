@@ -1,4 +1,5 @@
-from typing import List
+from sys import maxsize
+from typing import Dict
 
 import pytest
 
@@ -24,50 +25,50 @@ def test_category_map_translate(category_map: CategoryMap, num: int, expected: i
 
 
 @pytest.mark.parametrize('category_maps, src, dst, num, expected', [
-    ([
-         CategoryMap()
-     ], 'undefined', 'undefined', 1, 1),
-    ([
-         CategoryMap(src='seed', dst='soil', maps=['50 98 2', '52 50 48']),
-         CategoryMap(src='soil', dst='fertilizer', maps=['0 15 37', '37 52 2', '39 0 15'])
-     ], 'seed', 'location', 79, -1),
-    ([
-         CategoryMap(src='seed', dst='soil', maps=['50 98 2', '52 50 48']),
-         CategoryMap(src='soil', dst='fertilizer', maps=['0 15 37', '37 52 2', '39 0 15']),
-         CategoryMap(src='fertilizer', dst='water', maps=['49 53 8', '0 11 42', '42 0 7', '57 7 4']),
-         CategoryMap(src='water', dst='light', maps=['88 18 7', '18 25 70']),
-         CategoryMap(src='light', dst='temperature', maps=['45 77 23', '81 45 19', '68 64 13']),
-         CategoryMap(src='temperature', dst='humidity', maps=['0 69 1', '1 0 69']),
-         CategoryMap(src='humidity', dst='location', maps=['60 56 37', '56 93 4'])
-     ], 'seed', 'location', 79, 82),
-    ([
-         CategoryMap(src='seed', dst='soil', maps=['50 98 2', '52 50 48']),
-         CategoryMap(src='soil', dst='fertilizer', maps=['0 15 37', '37 52 2', '39 0 15']),
-         CategoryMap(src='fertilizer', dst='water', maps=['49 53 8', '0 11 42', '42 0 7', '57 7 4']),
-         CategoryMap(src='water', dst='light', maps=['88 18 7', '18 25 70']),
-         CategoryMap(src='light', dst='temperature', maps=['45 77 23', '81 45 19', '68 64 13']),
-         CategoryMap(src='temperature', dst='humidity', maps=['0 69 1', '1 0 69']),
-         CategoryMap(src='humidity', dst='location', maps=['60 56 37', '56 93 4'])
-     ], 'seed', 'location', 14, 43),
-    ([
-         CategoryMap(src='seed', dst='soil', maps=['50 98 2', '52 50 48']),
-         CategoryMap(src='soil', dst='fertilizer', maps=['0 15 37', '37 52 2', '39 0 15']),
-         CategoryMap(src='fertilizer', dst='water', maps=['49 53 8', '0 11 42', '42 0 7', '57 7 4']),
-         CategoryMap(src='water', dst='light', maps=['88 18 7', '18 25 70']),
-         CategoryMap(src='light', dst='temperature', maps=['45 77 23', '81 45 19', '68 64 13']),
-         CategoryMap(src='temperature', dst='humidity', maps=['0 69 1', '1 0 69']),
-         CategoryMap(src='humidity', dst='location', maps=['60 56 37', '56 93 4'])
-     ], 'seed', 'location', 55, 86),
-    ([
-         CategoryMap(src='seed', dst='soil', maps=['50 98 2', '52 50 48']),
-         CategoryMap(src='soil', dst='fertilizer', maps=['0 15 37', '37 52 2', '39 0 15']),
-         CategoryMap(src='fertilizer', dst='water', maps=['49 53 8', '0 11 42', '42 0 7', '57 7 4']),
-         CategoryMap(src='water', dst='light', maps=['88 18 7', '18 25 70']),
-         CategoryMap(src='light', dst='temperature', maps=['45 77 23', '81 45 19', '68 64 13']),
-         CategoryMap(src='temperature', dst='humidity', maps=['0 69 1', '1 0 69']),
-         CategoryMap(src='humidity', dst='location', maps=['60 56 37', '56 93 4'])
-     ], 'seed', 'location', 13, 35)
+    ({
+         'undefined': CategoryMap()
+     }, 'undefined', 'undefined', 1, 1),
+    ({
+         'seed': CategoryMap(src='seed', dst='soil', maps=['50 98 2', '52 50 48']),
+         'soil': CategoryMap(src='soil', dst='fertilizer', maps=['0 15 37', '37 52 2', '39 0 15'])
+     }, 'seed', 'location', 79, maxsize),
+    ({
+         'seed': CategoryMap(src='seed', dst='soil', maps=['50 98 2', '52 50 48']),
+         'soil': CategoryMap(src='soil', dst='fertilizer', maps=['0 15 37', '37 52 2', '39 0 15']),
+         'fertilizer': CategoryMap(src='fertilizer', dst='water', maps=['49 53 8', '0 11 42', '42 0 7', '57 7 4']),
+         'water': CategoryMap(src='water', dst='light', maps=['88 18 7', '18 25 70']),
+         'light': CategoryMap(src='light', dst='temperature', maps=['45 77 23', '81 45 19', '68 64 13']),
+         'temperature': CategoryMap(src='temperature', dst='humidity', maps=['0 69 1', '1 0 69']),
+         'humidity': CategoryMap(src='humidity', dst='location', maps=['60 56 37', '56 93 4'])
+     }, 'seed', 'location', 79, 82),
+    ({
+         'seed': CategoryMap(src='seed', dst='soil', maps=['50 98 2', '52 50 48']),
+         'soil': CategoryMap(src='soil', dst='fertilizer', maps=['0 15 37', '37 52 2', '39 0 15']),
+         'fertilizer': CategoryMap(src='fertilizer', dst='water', maps=['49 53 8', '0 11 42', '42 0 7', '57 7 4']),
+         'water': CategoryMap(src='water', dst='light', maps=['88 18 7', '18 25 70']),
+         'light': CategoryMap(src='light', dst='temperature', maps=['45 77 23', '81 45 19', '68 64 13']),
+         'temperature': CategoryMap(src='temperature', dst='humidity', maps=['0 69 1', '1 0 69']),
+         'humidity': CategoryMap(src='humidity', dst='location', maps=['60 56 37', '56 93 4'])
+     }, 'seed', 'location', 14, 43),
+    ({
+         'seed': CategoryMap(src='seed', dst='soil', maps=['50 98 2', '52 50 48']),
+         'soil': CategoryMap(src='soil', dst='fertilizer', maps=['0 15 37', '37 52 2', '39 0 15']),
+         'fertilizer': CategoryMap(src='fertilizer', dst='water', maps=['49 53 8', '0 11 42', '42 0 7', '57 7 4']),
+         'water': CategoryMap(src='water', dst='light', maps=['88 18 7', '18 25 70']),
+         'light': CategoryMap(src='light', dst='temperature', maps=['45 77 23', '81 45 19', '68 64 13']),
+         'temperature': CategoryMap(src='temperature', dst='humidity', maps=['0 69 1', '1 0 69']),
+         'humidity': CategoryMap(src='humidity', dst='location', maps=['60 56 37', '56 93 4'])
+     }, 'seed', 'location', 55, 86),
+    ({
+         'seed': CategoryMap(src='seed', dst='soil', maps=['50 98 2', '52 50 48']),
+         'soil': CategoryMap(src='soil', dst='fertilizer', maps=['0 15 37', '37 52 2', '39 0 15']),
+         'fertilizer': CategoryMap(src='fertilizer', dst='water', maps=['49 53 8', '0 11 42', '42 0 7', '57 7 4']),
+         'water': CategoryMap(src='water', dst='light', maps=['88 18 7', '18 25 70']),
+         'light': CategoryMap(src='light', dst='temperature', maps=['45 77 23', '81 45 19', '68 64 13']),
+         'temperature': CategoryMap(src='temperature', dst='humidity', maps=['0 69 1', '1 0 69']),
+         'humidity': CategoryMap(src='humidity', dst='location', maps=['60 56 37', '56 93 4'])
+     }, 'seed', 'location', 13, 35)
 ])
-def test_interpret_find(category_maps: List[CategoryMap], src: str, dst: str, num: int, expected: int):
+def test_interpret_find(category_maps: Dict[str, CategoryMap], src: str, dst: str, num: int, expected: int):
     actual = find(src, dst, num, category_maps)
     assert actual == expected
