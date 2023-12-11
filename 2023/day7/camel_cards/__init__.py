@@ -15,9 +15,38 @@ CARD_STRENGTHS = {'A': 13,
                   '4': 3,
                   '3': 2,
                   '2': 1}
+JOKER = 'J'
+CARD_STRENGTHS_JOKER = {'A': 13,
+                        'K': 12,
+                        'Q': 11,
+                        'T': 10,
+                        '9': 9,
+                        '8': 8,
+                        '7': 7,
+                        '6': 6,
+                        '5': 5,
+                        '4': 4,
+                        '3': 3,
+                        '2': 2,
+                        'J': 1}
 
 
-def get_strength(hand: str) -> int:
+def replace_joker(hand: str) -> str:
+    if not hand or JOKER not in hand:
+        return hand
+    cards = sorted({c: CARD_STRENGTHS_JOKER[c] for c in hand}.items(),
+                   key=lambda item: item[1],
+                   reverse=True)
+    alt_hands = [hand.replace(JOKER, c[0]) for c in cards]
+    alt_hands_scored = {h: get_strength(h) for h in alt_hands}
+    best, *rest = sorted(alt_hands_scored.items(),
+                         key=lambda item: item[1],
+                         reverse=True)
+    return best[0] if best else hand
+
+
+def get_strength(hand: str, use_joker: bool = False) -> int:
+    hand = replace_joker(hand) if use_joker else hand
     g = {c: hand.count(c) for c in hand}
     v = set(g.values())
     if {5} == v:
@@ -35,11 +64,13 @@ def get_strength(hand: str) -> int:
     return 1
 
 
-def rank(hands: List[str]) -> Dict[str, int]:
-    hands_scored = {h: get_strength(h) for h in hands}
+def rank(hands: List[str], use_joker: bool = False) -> Dict[str, int]:
+    _card_strengths = CARD_STRENGTHS_JOKER if use_joker else CARD_STRENGTHS
+    hands_scored = {h: get_strength(h, use_joker) for h in hands}
     hands_ranked = []
     for strength in range(MIN_STRENGTH, MAX_STRENGTH + 1):
         _hands = (h for h, s in hands_scored.items() if s == strength)
-        for h in sorted(_hands, key=lambda ele: sum((100**(5 - i)) * CARD_STRENGTHS.get(c, 0) for i, c in enumerate(ele))):
+        for h in sorted(_hands,
+                        key=lambda ele: sum((100 ** (5 - i)) * _card_strengths.get(c, 0) for i, c in enumerate(ele))):
             hands_ranked.append(h)
     return {h: i + 1 for i, h in enumerate(hands_ranked)}
