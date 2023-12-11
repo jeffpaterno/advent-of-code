@@ -35,15 +35,11 @@ def get_strength(hand: str) -> int:
     return 1
 
 
-def get_multiplier(i: int) -> int:
-    return 10 ** (5 - i)
-
-
 def rank(hands: List[str]) -> Dict[str, int]:
     hands_scored = {h: get_strength(h) for h in hands}
     hands_ranked = []
     for strength in range(MIN_STRENGTH, MAX_STRENGTH + 1):
         _hands = (h for h, s in hands_scored.items() if s == strength)
-        for h in sorted(_hands, key=lambda ele: sum((10**(5 - i)) * CARD_STRENGTHS.get(c, 0) for i, c in enumerate(ele))):
+        for h in sorted(_hands, key=lambda ele: sum((100**(5 - i)) * CARD_STRENGTHS.get(c, 0) for i, c in enumerate(ele))):
             hands_ranked.append(h)
     return {h: i + 1 for i, h in enumerate(hands_ranked)}
